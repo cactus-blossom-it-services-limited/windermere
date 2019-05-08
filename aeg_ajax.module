@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * Creates an AJAX form using Drupal 7 Forms API
+ * @link ajax AJAX Framework documentation @endlink and
+ * @link http://drupal.org/node/752056 AJAX Forms handbook page @endlink.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * Sets up calls to drupal_get_form()
+ */
+function aeg_ajax_menu() {
+  $items = array();
+
+  $items['custom-modules'] = array(
+    'title' => 'Custom modules',
+    'page callback' => 'ajax_modules_intro',
+    'access callback' => TRUE,
+    'expanded' => TRUE,
+  );
+
+  $items['custom-modules/ajax'] = array(
+    'title' => 'AJAX custom',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ajax_custom'),
+    'access callback' => TRUE,
+    'weight' => 0,
+  );
+
+  return $items;
+}
+
+/**
+ * An introduction page for the aeg_ajax module
+ */
+function ajax_modules_intro() {
+  $markup = t('This is an AJAX module that makes use of the Forms API');
+}
