@@ -14,14 +14,14 @@
 function aeg_ajax_menu() {
   $items = array();
 
-  $items['ajax-forms'] = array(
-    'title' => 'Custom modules',
+  $items['ajax-forms-tourist'] = array(
+    'title' => 'Ajax Forms',
     'page callback' => 'ajax_modules_intro',
     'access callback' => TRUE,
     'expanded' => TRUE,
   );
 
-  $items['ajax-forms/famous-cities'] = array(
+  $items['ajax-forms-tourist/famous-cities'] = array(
     'title' => 'Famous Cities',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('famous_cities'),
@@ -38,7 +38,7 @@ function aeg_ajax_menu() {
 function ajax_modules_intro() {
   $markup = t('This is an AJAX module that makes use of the Forms API');
 
-  $list[] = l(t('AJAX Custom module'), 'ajax-forms/ajax');
+  $list[] = l(t('Famous cities'), 'ajax-forms-tourist/famous-cities');
 
   $variables['items'] = $list;
   $variables['type'] = 'ul';
@@ -65,7 +65,7 @@ function famous_cities($form, &$form_state) {
       'New York' => 'New York',
       'Brussels' => 'Brussels'
     ),
-    '#default_value' => 'one',
+    '#default_value' => 'New York',
     '#ajax' => array(
       'callback' => 'aeg_ajax_callback',
       'wrapper' => 'replace_textfield_div',
@@ -105,6 +105,10 @@ function famous_cities($form, &$form_state) {
     $form['replace_textfield']['#type'] = "hidden";
   }
 
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
   return $form;
 }
 
@@ -124,4 +128,21 @@ function aeg_ajax_callback($form, $form_state) {
     $element['#value'] = "State your reason here";
   }
   return $element;
+}
+
+/**
+ * Submit function for form_famous_cities_submit().
+ *
+ * Adds a submit handler/function to our form to send a successful
+ * completion message to the screen.
+ *
+ * @ingroup aeg_ajax
+ */
+function famous_cities_submit($form, &$form_state) {
+  drupal_set_message(t('The form has been submitted. You chose: "@changethis". Your reason was: "@replace_textfield"',
+    array(
+      '@changethis' => $form_state['values']['changethis'],
+      '@replace_textfield' => $form_state['values']['replace_textfield'],
+    )
+  ));
 }
