@@ -22,14 +22,6 @@ function aeg_ajax_menu() {
   );
 
   $items['custom-modules/ajax'] = array(
-    'title' => 'Travel',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('ajax_custom'),
-    'access callback' => TRUE,
-    'weight' => 0,
-  );
-
-  $items['custom-modules/ajax'] = array(
     'title' => 'Famous Cities',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ajax_custom'),
