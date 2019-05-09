@@ -109,6 +109,7 @@ function ajax_custom($form, &$form_state) {
     $form['replace_textfield']['#description'] = t("Say why you chose '@value'", array('@value' => $form_state['values']['changethis']));
   }
   else {
+    $form['replace_textfield']['#title'] = t("Your reason is secret");
     $form['replace_textfield']['#type'] = "hidden";
   }
 
