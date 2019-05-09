@@ -81,6 +81,8 @@ function famous_cities($form, &$form_state) {
       0 => t('No'),
       1 => t('Yes'),
     ),
+    '#default_value' => 0,
+    '#required' => TRUE,
   );
 
   // This entire form element will be replaced whenever 'changethis' is updated.
