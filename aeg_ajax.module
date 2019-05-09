@@ -74,6 +74,12 @@ function ajax_custom($form, &$form_state) {
       'Brussels' => 'Brussels'
     ),
     '#default_value' => 'one',
+    '#ajax' => array(
+      'callback' => 'aeg_ajax_callback',
+      'wrapper' => 'replace_textfield_div',
+      'effect' => 'slide',
+      'progress' => array('type' => 'none'),
+    ),
   );
 
   $form['tell_us_why'] = array(
@@ -87,7 +93,7 @@ function ajax_custom($form, &$form_state) {
     '#required' => TRUE,
   );
 
-  // This entire form element will be replaced on form submit.
+  // This entire form element will be replaced whenever 'changethis' is updated.
   $form['replace_textfield'] = array(
     '#type' => 'textfield',
     '#title' => t("State your reason"),
@@ -96,18 +102,6 @@ function ajax_custom($form, &$form_state) {
     '#prefix' => '<div id="replace_textfield_div">',
     '#suffix' => '</div>',
   );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#ajax' => array(
-      'callback' => 'aeg_ajax_callback',
-      'wrapper' => 'replace_textfield_div',
-      'effect' => 'slide',
-      'progress' => array('type' => 'none'),
-    ),
-    '#value' => t('Submit'),
-  );
-
 
   // An AJAX request calls the form builder function for every change.
   // We can change how we build the form based on $form_state.
