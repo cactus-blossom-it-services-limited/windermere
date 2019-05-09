@@ -83,6 +83,7 @@ function ajax_custom($form, &$form_state) {
   $form['replace_textfield'] = array(
     '#type' => 'textfield',
     '#title' => t("State your reason"),
+    '#default_value' => "",
     // The prefix/suffix provide the div that we're replacing, named by
     // #ajax['wrapper'] above.
     '#prefix' => '<div id="replace_textfield_div">',
@@ -92,10 +93,14 @@ function ajax_custom($form, &$form_state) {
   // An AJAX request calls the form builder function for every change.
   // We can change how we build the form based on $form_state.
   if ($form_state['values']['tell_us_why'] == 1) {
+    $form['replace_textfield']['#value'] = "";
+    $form_state['values']['replace_textfield'] = "";
     $form['replace_textfield']['#description'] = t("Say why you chose '@value'", array('@value' => $form_state['values']['changethis']));
   }
   else {
+    $form['replace_textfield']['#title'] = t("Your reason is secret");
     $form['replace_textfield']['#value'] = "";
+    $form_state['values']['replace_textfield'] = "";
   }
 
   return $form;
