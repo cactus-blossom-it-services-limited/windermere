@@ -79,13 +79,14 @@ function ajax_custom($form, &$form_state) {
       0 => t('No'),
       1 => t('Yes'),
     ),
+    '#default_value' => 0,
+    '#required' => TRUE,
   );
 
   // This entire form element will be replaced whenever 'changethis' is updated.
   $form['replace_textfield'] = array(
     '#type' => 'textfield',
     '#title' => t("State your reason"),
-    '#default_value' => "andrew default value",
     // The prefix/suffix provide the div that we're replacing, named by
     // #ajax['wrapper'] above.
     '#prefix' => '<div id="replace_textfield_div">',
@@ -99,8 +100,7 @@ function ajax_custom($form, &$form_state) {
   }
   else {
     $form['replace_textfield']['#title'] = t("Your reason is secret");
-    $form['replace_textfield']['#value'] = "";
-    $form_state['values']['replace_textfield'] = "";
+    $form['replace_textfield']['#type'] = "hidden";
   }
 
   return $form;
@@ -115,11 +115,11 @@ function aeg_ajax_callback($form, $form_state) {
   // The form has already been submitted and updated. We can return the replaced
   // item as it is.
   $element = $form['replace_textfield'];
-  if (!empty($form_state['values']['tell_us_why']) && $form_state['values']['tell_us_why'] = 1) {
+  if (!empty($form_state['values']['tell_us_why']) && $form_state['values']['tell_us_why'] == 1) {
     $element['#value'] = "State your reason here";
   }
   else {
-    $element['#value'] = "No reason given";
+    $element['#value'] = "State your reason here";
   }
   return $element;
 }
